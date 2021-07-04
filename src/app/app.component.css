@@ -1,0 +1,7 @@
+.loginForm {
+    width: 25vw;
+    margin-top: 10vh;
+    position: absolute;
+    margin: auto;
+    left: calc(38vw);
+}
