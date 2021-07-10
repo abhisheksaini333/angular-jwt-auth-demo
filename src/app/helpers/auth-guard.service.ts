@@ -20,7 +20,7 @@ export class AuthGuardService implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     // if user is logged In, it means FE has a JWT token, return true
-    const jwtToken = this._authenticationService.getToken();
+    const jwtToken = this._authenticationService.currentUserValue;
     if (jwtToken && JSON.stringify(jwtToken) !== '{}') {
       return true;
     }

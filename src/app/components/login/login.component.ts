@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { first } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +16,9 @@ export class LoginComponent implements OnInit {
   error: any = '';
 
   constructor(
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
+    private _authenticationService: AuthenticationService,
+    private _router: Router
   ) { }
 
   ngOnInit(): void {
@@ -36,6 +41,15 @@ export class LoginComponent implements OnInit {
     }
 
     // Make an API call
+    this._authenticationService.login(this.f.email.value, this.f.password.value)
+      .pipe(first())
+      .subscribe(data => {
+        // navigate to the home page
+        this._router.navigate(['/home']);
+      }, error => {
+        // set the error
+        this.error = error.message;
+      })
   }
 
 }
